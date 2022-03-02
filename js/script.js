@@ -1,44 +1,34 @@
 // Loard Search Result
-const searchPhone = async () => {
+const searchPhone = (condition=true, search) => {
     displayOrHideElement('search-not-found', 'none');
-	displayOrHideElement('phone-details', 'none');
-	displayOrHideElement('load-more-button', 'none');
-    
+
+
+    if(condition===true){
+		document.getElementById('search-result').textContent = ``;
+
+	} else{
+		searchText = search;
+	}
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     // clear data
     searchField.value = '';
-    if (searchText == '') {
-        // please write something to display
-    }
-    else {
         // load data
         const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
         fetch(url)
         .then(res => res.json())
-        .then(data => displaySearchResult(data.data))
-        // try {
-        //     const res = await fetch(url);
-        //     console.log(url);
-        //     const data = await res.json();
-        //     // displaySearchResult(data.phone)
-        //     console.log(data);
-           
-        // }
-        // catch (error) {
-        //     console.log(error);
-        // }
-
-    }
+        .then(data => displaySearchResult(data.data, condition, searchText))
 
 }
 // Display Search Result
-const displaySearchResult = data => {
+const displaySearchResult = (data) => {
     const searchResult = document.getElementById('search-result');
+   // No search found
+	if(data.length === 0){
+		displayOrHideElement('search-not-found', 'block');
+	}
+    
     searchResult.textContent = '';
-    // if (data.length == 0) {
-    //     // show no result found;
-    // }
     data.forEach(singleData => {
         // console.log(singleData);
         const div = document.createElement('div');
@@ -65,19 +55,19 @@ const loadPhoneDetail = async id => {
 
     fetch(url)
         .then(res => res.json())
-        .then(data => displayMealDetail(data.data));
+        .then(data => displayPhoneDetail(data.data));
         // .then(data => console.log(data.data.mainFeatures));
 }
 
 //Display Phone Details
-const displayMealDetail = phoneDetail => {
+const displayPhoneDetail = phoneDetail => {
     // console.log(phoneDetail);
     const phoneDetails = document.getElementById('phone-details');
     phoneDetails.textContent = '';
     const div = document.createElement('div');
     div.classList.add('card');
     div.innerHTML = `
-    <img src="${phoneDetail.image}" class="card-img-top" alt="...">
+    <img src="${phoneDetail.image}" class="card-img-top w-50 mx-auto" alt="...">
     <div class="card-body">
         <h5 class="card-title text-center">${phoneDetail.name}</h5>
         <p class="card-text text-center"> Brand: ${phoneDetail.brand}</p>
@@ -91,10 +81,19 @@ const displayMealDetail = phoneDetail => {
 			<li><strong>Sensors: </strong>${phoneDetail?.mainFeatures?.sensors ? phoneDetail.mainFeatures.sensors : notExistMessage()}</li>
 		</div>
         <h3 class='my-3' >Others</h3>
+        <div>
+			<li><strong>WLAN: </strong>${phoneDetail?.others?.WLAN ? phoneDetail.others.WLAN : notExistMessage()}</li>
+			<li><strong>Bluetooth: </strong>${phoneDetail?.others?.Bluetooth ? phoneDetail.others.Bluetooth: notExistMessage()}</li>
+			<li><strong>GPS: </strong>${phoneDetail?.others?.GPS ? phoneDetail.others.GPS : notExistMessage()}</li>
+			<li><strong>NFC: </strong>${phoneDetail?.others?.NFC ? phoneDetail.others.NFC : notExistMessage()}</li>
+			<li><strong>Radio: </strong>${phoneDetail?.others?.Radio ? phoneDetail.others.Radio : notExistMessage()}</li>
+			<li><strong>USB: </strong>${phoneDetail?.others?.USB ? phoneDetail.others.USB : notExistMessage()}</li>
+		</div
     </div>
     `;
     phoneDetails.appendChild(div);
 }
+
 
 // No Exist Message Arrow Function
 const notExistMessage = () => {
