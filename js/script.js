@@ -1,7 +1,11 @@
 // Load Search Result
 const searchPhone = (condition=true, search) => {
     displayOrHideElement('search-not-found', 'none');
+    displayOrHideElement('load-more-button', 'none');
 
+
+    let searchField = document.getElementById('search-field');
+    let searchText = searchField.value;
 
     if(condition===true){
 		document.getElementById('search-result').textContent = ``;
@@ -9,8 +13,7 @@ const searchPhone = (condition=true, search) => {
 	} else{
 		searchText = search;
 	}
-    const searchField = document.getElementById('search-field');
-    const searchText = searchField.value;
+   
     // clear data
     searchField.value = '';
         // load data
