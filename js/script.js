@@ -9,6 +9,7 @@ const searchPhone = (condition=true, search) => {
 
     if(condition===true){
 		document.getElementById('search-result').textContent = ``;
+        document.getElementById('phone-details').textContent= ``;
 
 	} else{
 		searchText = search;
