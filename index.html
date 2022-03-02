@@ -10,10 +10,35 @@
 </head>
 <body>
 
+    <!-- navbar starts -->
+    <nav class="bg-primary bg-opacity-75">
+        <div class="container">
+          <h3 class="text-white text-center p-3 ">Phone Gallery</h3>
+        </div>
+      </nav>
+    <!-- navbar ends -->
+      <!-- search button -->
+    <div class="container">
+        <div class="input-group mb-3 my-3 w-50 mx-auto">
+            <input id="search-field" type="text" class="form-control" placeholder="Search Your Phone" aria-label="Search Your Phone" aria-describedby="button-addon2">
+            <button onclick="searchFood()" class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
+        </div>
+    </div>
+    <!-- error message -->
+    <div>
+        <!-- <p id="error-message" class=" text-danger">Something went wrong please try again later</p> -->
+    </div>
 
+    <!-- single phone details -->
+    <div id="phone-details" class=" w-50 mx-auto">
+    </div>
 
-    
-    
+    <!-- phone search result -->
+    <div class="container">
+        <div id="search-result" class="row row-cols-1 row-cols-md-3 g-4">
+        </div>
+    </div>
+
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <!-- js -->
