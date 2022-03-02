@@ -1,4 +1,4 @@
-// Loard Search Result
+// Load Search Result
 const searchPhone = (condition=true, search) => {
     displayOrHideElement('search-not-found', 'none');
 
@@ -21,7 +21,7 @@ const searchPhone = (condition=true, search) => {
 
 }
 // Display Search Result
-const displaySearchResult = (data) => {
+const displaySearchResult = (data, condition, searchText) => {
     const searchResult = document.getElementById('search-result');
    // No search found
 	if(data.length === 0){
@@ -29,7 +29,22 @@ const displaySearchResult = (data) => {
 	}
     
     searchResult.textContent = '';
+
+    const lengthOfResult = data.length;
+
+	if(lengthOfResult>20){
+		document.getElementById('load-more-button').setAttribute('onclick',`searchPhone(false,'${searchText}')`);
+	}
+
+	//Load More Button Show and Hide Codition
+	if(lengthOfResult>20 && condition === true){
+		displayOrHideElement('load-more-button', 'block');
+	} 
+    let flag = 0;
     data.forEach(singleData => {
+        if(flag===20 && condition === true){
+            return false;
+        }
         // console.log(singleData);
         const div = document.createElement('div');
         div.classList.add('col');
@@ -45,8 +60,10 @@ const displaySearchResult = (data) => {
         </div>
         `;
         searchResult.appendChild(div);
-    })
-}
+        flag++;
+		return true;
+        })
+};
 
 //Load Phone Details
 const loadPhoneDetail = async id => {
@@ -67,7 +84,7 @@ const displayPhoneDetail = phoneDetail => {
     const div = document.createElement('div');
     div.classList.add('card');
     div.innerHTML = `
-    <img src="${phoneDetail.image}" class="card-img-top w-50 mx-auto" alt="...">
+    <img src="${phoneDetail.image}" class="card-img-top w-25 mx-auto" alt="...">
     <div class="card-body">
         <h5 class="card-title text-center">${phoneDetail.name}</h5>
         <p class="card-text text-center"> Brand: ${phoneDetail.brand}</p>
